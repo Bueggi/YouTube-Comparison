@@ -1,0 +1,17 @@
+{
+  "name": "youtubecomparison",
+  "version": "1.0.0",
+  "description": "Compare your YouTube channel to more successfull channels in order to grow your own channel",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "YouTube",
+    "Analytics",
+    "YouTube",
+    "Channel"
+  ],
+  "author": "Christopher Buecklein",
+  "license": "ISC"
+}

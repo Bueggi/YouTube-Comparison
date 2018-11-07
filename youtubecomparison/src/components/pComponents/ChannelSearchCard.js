@@ -1,8 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { updateYouTubeData } from '../../actions';
+import { updateYouTubeData, addChannelToWatch } from '../../actions';
 
 class ChannelSearch extends Component {
+  handleClick (e) {
+    console.log(e.target)
+  }
+
   render () {
     if(this.props.id)
     {
@@ -17,7 +21,7 @@ class ChannelSearch extends Component {
             <h3>{this.props.title}</h3>
           </div>
           <div className="card-action">
-            <a href="#" onClick={this.handleClick}>Add To Comparison</a>
+            <a href="#" onClick={() => this.props.addChannelToWatch(this.props.id)}>Add To Comparison</a>
           </div>
         </div>
       </div>
@@ -33,7 +37,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  updateData: (newData) => dispatch(updateYouTubeData(newData))
+  updateData: (newData) => dispatch(updateYouTubeData(newData)),
+  addChannelToWatch: (channelId) => dispatch(addChannelToWatch(channelId))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ChannelSearch);

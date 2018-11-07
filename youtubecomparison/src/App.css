@@ -25,7 +25,11 @@
 
 .header {
   margin-top: 0;
-  padding-top: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 30px 40px;
   height: 500px;
   background-image:
     linear-gradient(to right bottom, rgba(246,94,95, 0.5), rgba(186, 27,29, 0.5)) ,

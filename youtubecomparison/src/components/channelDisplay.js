@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { updateYouTubeData } from '../actions';
+import { updateYouTubeData, addChannelToWatch } from '../actions';
 
 
 class ChannelDisplay extends Component {
@@ -15,18 +15,24 @@ class ChannelDisplay extends Component {
   render () {
     return (
       <div>
-        <h2>Jo, hier steht auch was</h2>
+        <ul>
+        <p>{this.props.channelsToCompare.map((el, i) => {
+          return <li key='i'>{el}</li>
+        })
+        }</p>
+        </ul>
       </div>
     )
   }
 }
 
 const mapStateToProps = (state) => ({
-  channelsToCompare: state.entities.topics,
+  channelsToCompare: state.entities.channelsToCompare,
 });
 
 const mapDispatchToProps = (dispatch) => ({
-  updateYouTubeData: (newData) => dispatch(updateYouTubeData(newData))
+  updateYouTubeData: (newData) => dispatch(updateYouTubeData(newData)),
+  addChannelToWatch: (channelID) => dispatch(addChannelToWatch(channelID))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ChannelDisplay);

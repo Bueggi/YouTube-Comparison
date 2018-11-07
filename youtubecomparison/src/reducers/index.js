@@ -1,7 +1,8 @@
 import { combineReducers } from 'redux';
 
 const initialState = {
-  channelsToCompare: []
+  channelsToCompare: [],
+  dataFromYouTubeChannels: []
 }
 
 
@@ -10,11 +11,24 @@ const entities = ( state = initialState, action) => {
     case 'UPDATE_DATA':
       return {
         ...state,
-        channelsToCompare: action.data
+        dataFromYouTubeChannels: action.data
       };
-    default: return state;
+
+  case 'ADD_CHANNEL_TO_WATCH':
+    return {
+      ...state,
+      channelsToCompare: [...state.channelsToCompare, action.channelID]
+    };
+
+  case 'REMOVE_CHANNEL_FROM_WATCHLIST':
+    return {
+      ...state,
+      channelsToCompare: state.channelsToCompare.filter(el => el.id !== action.channelID)
+    };
+  default: return state;
   }
-};
+}
+
 
 const reducers = combineReducers({
   entities,

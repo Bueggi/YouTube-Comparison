@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const quickstart = require('../quickstart')
+const passport = require('passport');
+const YouTubeStrategy = require('passport-youtube-v3');
 
 router.get('/', (req, res)=>{
   console.log('works');

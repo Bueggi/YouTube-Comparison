@@ -7,7 +7,7 @@ import ChannelSearchCard from './pComponents/ChannelSearchCard'
 let searchCards = [];
 class Navigation extends Component {
 
-// https://www.googleapis.com/youtube.v3/activities?part=snippet,contentDetails&channelId=UCXv-alMKw3H0Y85DLm1mo8A&key=AIzaSyAUcPsPaVuyHMTpHi9Qv3TzGLHRJghVdIM
+  // https://www.googleapis.com/youtube.v3/activities?part=snippet,contentDetails&channelId=UCXv-alMKw3H0Y85DLm1mo8A&key=AIzaSyAUcPsPaVuyHMTpHi9Qv3TzGLHRJghVdIM
   constructor(props) {
     super(props);
     this.state = {
@@ -69,6 +69,7 @@ class Navigation extends Component {
               <div className="header">
                 <h1>Compare YouTube-Channels</h1>
                 <h2>Make your channel grow bigger than your ego!</h2>
+                <a class="waves-effect waves-light btn-large">Sign In with Youtube</a>
               </div>
           }
         </div>

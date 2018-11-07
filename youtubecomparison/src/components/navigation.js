@@ -2,14 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { updateYouTubeData } from '../actions';
 import ChannelSearchCard from './pComponents/ChannelSearchCard'
-
-const {google} = require('googleapis');
-
-const youtube = google.youtube({
-  version: 'v3',
-  auth: 'http://localhost.3000'.oAuth2Client,
-});
-
+import GoogleLogin from './GoogleLogin';
 
 
 let searchCards = [];
@@ -20,32 +13,12 @@ class Navigation extends Component {
     super(props);
     this.state = {
       searchInput: '',
+      signedInUser : null
 
     };
-    this.GoogleAuth = null
-  }
-
-  initClient = () => {
-  window.gapi.client.init({
-    'apiKey': '314239737420-gjdh038nnos438r8cv04gi96nsie58n2.apps.googleusercontent.com',
-    'clientId': 'tQ71yzS8aLV4QHK1wvTumL1l',
-    'scope': 'https://www.googleapis.com/auth/yt-analytics.readonly',
-    'discoveryDocs': ['https://www.googleapis.com/discovery/v1/apis/youtubeAnalytics/v1/rest']
-  }).then(function () {
-    this.GoogleAuth = window.gapi.auth2.getAuthInstance();
-
-    // Listen for sign-in state changes.
-    // this.state.GoogleAuth.isSignedIn.listen(updateSigninStatus);
-})
-  }
-
-  componentDidMount () {
-    this.initClient()
   }
 
   render () {
-
-
      const onSearchInput = (e) => {
         const value = e.target.value;
         this.setState({searchInput: value});
@@ -67,6 +40,39 @@ class Navigation extends Component {
         }
       }
       )
+    }
+
+    const clearInputField = () => {
+      this.setState({searchInput: ''});
+    }
+
+    const responseGoogle = (response) => {
+      this.setState({signedInUser: response});
+      console.log(response.getId());
+      console.log(typeof response)
+    }
+
+    const logInOrLogOut = () => {
+      if (this.state.signedInUser && this.state.signedInUser.isSignedIn())
+      {
+        return (<div>Hello, beautiful human being</div>)
+      }
+      else {
+        return (
+          <div>
+            <h1>Compare YouTube-Channels</h1>
+            <h2>Make your channel grow bigger than your ego!</h2>
+            <GoogleLogin
+            clientId="314239737420-gjdh038nnos438r8cv04gi96nsie58n2.apps.googleusercontent.com"
+            onSuccess={responseGoogle}
+            onFailure={responseGoogle}
+            className="waves-effect waves-light btn-large"
+            buttontext="Sign in with YouTube"
+            scope={'https://www.googleapis.com/auth/yt-analytics.readonly'} />
+          </div>
+        )
+      }
+
     }
 
     return (
@@ -93,9 +99,7 @@ class Navigation extends Component {
               thumbnail={cardInfos.snippet.thumbnails.medium.url} />)
               :
               <div className="header">
-                <h1>Compare YouTube-Channels</h1>
-                <h2>Make your channel grow bigger than your ego!</h2>
-                <a class="waves-effect waves-light btn-large">Sign In with Youtube</a>
+                {logInOrLogOut()}
               </div>
           }
         </div>

@@ -3,22 +3,48 @@ import { connect } from 'react-redux';
 import { updateYouTubeData } from '../actions';
 import ChannelSearchCard from './pComponents/ChannelSearchCard'
 
+const {google} = require('googleapis');
+
+const youtube = google.youtube({
+  version: 'v3',
+  auth: 'http://localhost.3000'.oAuth2Client,
+});
+
+
 
 let searchCards = [];
+
 class Navigation extends Component {
 
-  // https://www.googleapis.com/youtube.v3/activities?part=snippet,contentDetails&channelId=UCXv-alMKw3H0Y85DLm1mo8A&key=AIzaSyAUcPsPaVuyHMTpHi9Qv3TzGLHRJghVdIM
-  constructor(props) {
+ constructor (props) {
     super(props);
     this.state = {
       searchInput: '',
+
     };
+    this.GoogleAuth = null
   }
 
+  initClient = () => {
+  window.gapi.client.init({
+    'apiKey': '314239737420-gjdh038nnos438r8cv04gi96nsie58n2.apps.googleusercontent.com',
+    'clientId': 'tQ71yzS8aLV4QHK1wvTumL1l',
+    'scope': 'https://www.googleapis.com/auth/yt-analytics.readonly',
+    'discoveryDocs': ['https://www.googleapis.com/discovery/v1/apis/youtubeAnalytics/v1/rest']
+  }).then(function () {
+    this.GoogleAuth = window.gapi.auth2.getAuthInstance();
 
+    // Listen for sign-in state changes.
+    // this.state.GoogleAuth.isSignedIn.listen(updateSigninStatus);
+})
+  }
 
+  componentDidMount () {
+    this.initClient()
+  }
 
   render () {
+
 
      const onSearchInput = (e) => {
         const value = e.target.value;

@@ -1,3 +1,4 @@
+
 .App {
   text-align: center;
 }
@@ -20,6 +21,27 @@
 
 .App-link {
   color: #61dafb;
+}
+
+.header {
+  margin-top: 0;
+  padding-top: 50px;
+  height: 500px;
+  background-image:
+    linear-gradient(to right bottom, rgba(246,94,95, 0.5), rgba(186, 27,29, 0.5)) ,
+    url('images/header.jpg');
+  background-size: cover;
+  /* background-position: top; */
+}
+
+.header h1, .header h2 {
+  color: white;
+  font-weight: bold;
+  text-shadow: 2px 2px #564D4A;
+}
+
+.nav-wrapper {
+  margin-bottom: 0;
 }
 
 @keyframes App-logo-spin {

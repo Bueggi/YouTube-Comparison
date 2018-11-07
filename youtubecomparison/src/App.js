@@ -3,7 +3,6 @@ import Navigation from './components/navigation.js';
 import ChannelDisplay from './components/channelDisplay.js';
 import { connect } from 'react-redux';
 import { updateYouTubeData } from './actions';
-import logo from './logo.svg';
 import './App.css';
 
 class App extends Component {

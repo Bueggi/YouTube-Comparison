@@ -21,7 +21,7 @@ class ChannelSearch extends Component {
             <h3>{this.props.title}</h3>
           </div>
           <div className="card-action">
-            <a href="#" onClick={() => this.props.addChannelToWatch(this.props.id)}>Add To Comparison</a>
+            <a href="#" onClick={() => {this.props.addChannelToWatch(this.props.id); this.props.clearData() } }>Add To Comparison</a>
           </div>
         </div>
       </div>

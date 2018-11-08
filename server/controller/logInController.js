@@ -1,68 +1,32 @@
-const Youtube = require("youtube-api");
-const fs = require("fs");
-const readJson = require("r-json");
-const opn = require("opn");
+const GoogleAuth = require('google-auth-library');
+const axios = require('axios');
+const validateUrl = 'https://www.googleapis.com/oauth2/v3/tokeninfo?id_token=';
 
-// I downloaded the file from OAuth2 -> Download JSON
-const CREDENTIALS = readJson(`${__dirname}/client_secret.json`);
+exports.authGoogle = async (req, res, next) => {
+    if ('POST' != req.method) return await next();
+    let googleUserData = {
+        name: req.body.profileObj.name,
+        id: req.body.profileObj.googleId,
+        accessToken: req.body.Zi.access_token,
+        profile_picture: req.body.profileObj.imageUrl
+    };
 
-// Authenticate
-// You can access the Youtube resources via OAuth2 only.
-// https://developers.google.com/youtube/v3/guides/moving_to_oauth#service_accounts
-let oauth = Youtube.authenticate({
-    type: "oauth"
-  , client_id: CREDENTIALS.web.client_id
-  , client_secret: CREDENTIALS.web.client_secret
-  , redirect_url: CREDENTIALS.web.redirect_uris[0]
-});
-
-opn(oauth.generateAuthUrl({
-    access_type: "offline"
-  , scope: ["https://www.googleapis.com/auth/youtube.readonly"]
-}));
-
-// Handle oauth2 callback
-server.addPage("/oauth2callback", lien => {
-    Logger.log("Trying to get the token using the following code: " + lien.query.code);
-    oauth.getToken(lien.query.code, (err, tokens) => {
-
-        if (err) {
-            lien.lien(err, 400);
-            return Logger.log(err);
+    let authResult = await axios.get(
+        validateUrl + req.body.tokenId, {
+            headers: {
+                Authorization: 'Bearer ' + googleUserData.accessToken
+            }
         }
+    );
 
-        Logger.log("Got the tokens.");
+    if (authResult.data.sub == googleUserData.id) {
+        res.send(JSON.stringify({
+            accessToken: googleUserData.accessToken
+        }));
+    } else res.status = 404;
+};
 
-        oauth.setCredentials(tokens);
-
-        lien.end("The video is being uploaded. Check out the logs in the terminal.");
-
-        var req = Youtube.videos.insert({
-            resource: {
-                // Video title and description
-                snippet: {
-                    title: "Testing YoutTube API NodeJS module"
-                  , description: "Test video upload via YouTube API"
-                }
-                // I don't want to spam my subscribers
-              , status: {
-                    privacyStatus: "private"
-                }
-            }
-            // This is for the callback function
-          , part: "snippet,status"
-
-            // Create the readable stream to upload the video
-          , media: {
-                body: fs.createReadStream("video.mp4")
-            }
-        }, (err, data) => {
-            console.log("Done.");
-            process.exit();
-        });
-
-        setInterval(function () {
-            Logger.log(`${prettyBytes(req.req.connection._bytesDispatched)} bytes uploaded.`);
-        }, 250);
-    });
-});
+exports.login = async (req, res, next) => {
+    if ('GET' != req.method) return await next();
+    res.send(res.user);
+};

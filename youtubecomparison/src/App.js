@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import Navigation from './components/navigation.js';
+import Dashboard from './components/dashboard.js';
 import ChannelDisplay from './components/channelDisplay.js';
 import { connect } from 'react-redux';
 import { updateYouTubeData } from './actions';
@@ -9,7 +9,7 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-      <Navigation />
+      <Dashboard />
       <ChannelDisplay />
       </div>
     );

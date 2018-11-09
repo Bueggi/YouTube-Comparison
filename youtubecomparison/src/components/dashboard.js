@@ -5,6 +5,7 @@ import ChannelSearchCard from './pComponents/ChannelSearchCard';
 import OwnChannelInfo from './pComponents/ownChannelInfo';
 import GoogleLogin from 'react-google-login';
 import AwesomeDebouncePromise from 'awesome-debounce-promise';
+import moment from 'moment';
 
 const serverHost = 'http://localhost:3001';
 
@@ -21,6 +22,7 @@ class Dashboard extends Component {
     this.searchCards = [];
     this.signedInUser = null;
   }
+
 
   showChannelsDebounced = AwesomeDebouncePromise(this.showChannels, 500);
 

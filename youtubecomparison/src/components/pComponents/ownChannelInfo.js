@@ -2,18 +2,22 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { updateYouTubeData, addChannelToWatch, setOwnTrafficSources } from '../../actions';
 import TrafficSources from './trafficSourcesComponent';
+import moment from 'moment';
 
 
 class OwnChannelInfo extends Component {
 
+  today = moment().format('YYYY-MM-DD');
+  last28days = moment().subtract(28, 'days').format('YYYY-MM-DD');
+
   componentDidMount () {
-    console.log(this.props.ownChannel_TS)
+    this.fetchChannelStatistics();
     if (!this.props.ownChannel_TS)
     this.fetchAnalyticsData();
   }
 
   fetchAnalyticsData = async() => {
-      await fetch('https://youtubeanalytics.googleapis.com/v2/reports?dimensions=day,insightTrafficSourceType&ids=channel==MINE&metrics=views&sort=day&endDate=2018-04-05&startDate=2018-04-01',
+      await fetch(`https://youtubeanalytics.googleapis.com/v2/reports?dimensions=day,insightTrafficSourceType&ids=channel==MINE&metrics=views&sort=day&endDate=${this.last28days}&startDate=${this.today}`,
       {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('accessToken')}`
@@ -21,6 +25,17 @@ class OwnChannelInfo extends Component {
       })
         .then(data => data.json())
         .then(data => this.props.setOwnTrafficSources(data.rows))
+  }
+
+  fetchChannelStatistics = async () => {
+    await fetch(`https://youtubeanalytics.googleapis.com/v2/reports?ids=channel==MINE&dimensions=day&isCurated==1&metrics=views,comments,likes,dislikes,estimatedMinutesWatched,averageViewDuration&startDate=${this.last28days}&endDate=${this.today}`,
+      {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('accessToken')}`
+        }
+      })
+        .then(data => data.json())
+        .then(data => console.log('///channelData', data))
   }
 
 

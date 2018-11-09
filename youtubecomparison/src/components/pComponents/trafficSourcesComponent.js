@@ -10,7 +10,9 @@ class TrafficSources extends Component {
     }
   }
 
-  chartColors = [
+  colorCounter = 0;
+
+  CHART_COLORS = [
     'rgba(216, 164, 127, 0.1)',
     'rgba(223, 59, 87, 0.1)',
     'rgba(15, 113, 115, 0.1)',
@@ -19,7 +21,7 @@ class TrafficSources extends Component {
     'rgba(203, 111, 115, 0.1)',
   ];
 
-  borderColors = [
+  BORDER_COLORS = [
     'rgba(216, 164, 127, 1)',
     'rgba(223, 59, 87, 1)',
     'rgba(15, 113, 115, 1)',
@@ -27,9 +29,7 @@ class TrafficSources extends Component {
     'rgba(203, 111, 115, 1)',
   ];
 
-  colorCounter = 0;
-
-  datasToDisplay = [
+  DATA_TO_DISPLAY = [
     'YT_SEARCH',
     'RELATED_VIDEO',
     'PLAYLIST',
@@ -41,36 +41,35 @@ class TrafficSources extends Component {
     const traversedData = TSdata.reduce((acc, date) => {
     if(acc.labels.indexOf(date[0]) === -1) acc.labels.push(date[0]);
 
-    if (this.datasToDisplay.indexOf(date[1]) !== -1) {
+    if (this.DATA_TO_DISPLAY.indexOf(date[1]) !== -1) {
 
       const dataset = acc.datasets.find(el => el.label === date[1])
       if (!dataset) {
         acc.datasets.push({
           label: date[1],
           data: [date[2]],
-          backgroundColor: this.chartColors[this.colorCounter],
-          borderColor: this.borderColors[this.colorCounter]
+          backgroundColor: this.CHART_COLORS[this.colorCounter],
+          borderColor: this.BORDER_COLORS[this.colorCounter]
         })
         this.colorCounter++;
       }
       else dataset.data.push(date[2])
     }
-
-
     return acc;
   }, {
     labels: [],
     datasets: [],
   });
 
-  console.log(traversedData);
   return traversedData;
+  }
+
+  legendHover = (e, legendItem) => {
+    console.log(legendItem);
   }
 
   componentWillMount () {
     this.setState({ chartData: this.dataToTrafficSource(this.props.data)});
-    console.log('//// data I get as prop', this.props.data)
-    console.log('//// chartData', this.state.chartData)
   }
 
   render () {
@@ -82,6 +81,15 @@ class TrafficSources extends Component {
           data={this.state.chartData}
           height={100}
           options={{
+            title: {
+              display: true,
+              text: 'Traffic Sources',
+              position: 'top',
+              fontStyle: 'bold'
+            },
+            legend: {
+              position: 'right',
+            },
             yAxes: [{
                 stacked: true
             }]

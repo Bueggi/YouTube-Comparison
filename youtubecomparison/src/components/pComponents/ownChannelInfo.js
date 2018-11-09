@@ -17,7 +17,7 @@ class OwnChannelInfo extends Component {
   }
 
   fetchAnalyticsData = async() => {
-      await fetch(`https://youtubeanalytics.googleapis.com/v2/reports?dimensions=day,insightTrafficSourceType&ids=channel==MINE&metrics=views&sort=day&endDate=${this.last28days}&startDate=${this.today}`,
+      await fetch(`https://youtubeanalytics.googleapis.com/v2/reports?dimensions=day,insightTrafficSourceType&ids=channel==MINE&metrics=views&sort=day&endDate=${this.today}&startDate=${this.last28days}`,
       {
         headers: {
           Authorization: `Bearer ${localStorage.getItem('accessToken')}`

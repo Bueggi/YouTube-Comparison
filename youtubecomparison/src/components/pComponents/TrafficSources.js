@@ -10,6 +10,10 @@ class TrafficSources extends Component {
     }
   }
 
+  componentWillMount () {
+    this.setState({ chartData: this.dataToTrafficSource(this.props.data)});
+  }
+
   colorCounter = 0;
 
   CHART_COLORS = [
@@ -29,20 +33,13 @@ class TrafficSources extends Component {
     'rgba(203, 111, 115, 1)',
   ];
 
-  DATA_TO_DISPLAY = [
-    'YT_SEARCH',
-    'RELATED_VIDEO',
-    'PLAYLIST',
-    'SUBSCRIBER',
-    'END_SCREEN'
-  ];
+  DATA_TO_DISPLAY = this.props.dataToDisplay;
 
-  dataToTrafficSource = (TSdata) => {
-    const traversedData = TSdata.reduce((acc, date) => {
+  dataToTrafficSource = (rawData) => {
+    const traversedData = rawData.reduce((acc, date) => {
     if(acc.labels.indexOf(date[0]) === -1) acc.labels.push(date[0]);
 
     if (this.DATA_TO_DISPLAY.indexOf(date[1]) !== -1) {
-
       const dataset = acc.datasets.find(el => el.label === date[1])
       if (!dataset) {
         acc.datasets.push({
@@ -64,31 +61,19 @@ class TrafficSources extends Component {
   return traversedData;
   }
 
-  legendHover = (e, legendItem) => {
-    console.log(legendItem);
-  }
-
-  componentWillMount () {
-    this.setState({ chartData: this.dataToTrafficSource(this.props.data)});
-  }
 
   render () {
 
 
     return (
       <div className="chart">
+        <h1>{this.props.title}</h1>
         <Line
           data={this.state.chartData}
           height={100}
           options={{
-            title: {
-              display: true,
-              text: 'Traffic Sources',
-              position: 'top',
-              fontStyle: 'bold'
-            },
             legend: {
-              position: 'right',
+              position: 'top',
             },
             yAxes: [{
                 stacked: true

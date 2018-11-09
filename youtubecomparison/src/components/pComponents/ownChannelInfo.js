@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { updateYouTubeData, addChannelToWatch, setOwnTrafficSources } from '../../actions';
-import TrafficSources from './trafficSourcesComponent';
+import { updateYouTubeData, addChannelToWatch, setOwnTrafficSources, setOwnChannelStats } from '../../actions';
+import StackedLines from './TrafficSources';
 import moment from 'moment';
 
+import '../css/ownChannelInfo.css';
+import TrafficSources from './TrafficSources';
+import ChannelStatistics from './ChannelStatistics';
 
 class OwnChannelInfo extends Component {
 
@@ -35,17 +38,28 @@ class OwnChannelInfo extends Component {
         }
       })
         .then(data => data.json())
-        .then(data => console.log('///channelData', data))
+        .then(data => this.props.setOwnChannelStats(data))
   }
 
 
   render () {
-    if (this.props.ownChannel_TS) {
+    if (this.props.ownChannel_TS && this.props.ownChannel_Views) {
       return (
-        <div className="row">
-          Hallo, schau mal in die Console
-          <TrafficSources data={this.props.ownChannel_TS} />
+        <div className="chart_row">
+          <TrafficSources
+          data={this.props.ownChannel_TS}
+          dataToDisplay={[
+            'YT_SEARCH',
+            'RELATED_VIDEO',
+            'PLAYLIST',
+            'SUBSCRIBER',
+            'END_SCREEN'
+          ]}
+          title='Traffic Sources'/>
 
+          <ChannelStatistics
+          data={this.props.ownChannel_Views}
+          title='Views and Watchtime'/>
         </div>
       )
     }
@@ -57,13 +71,15 @@ class OwnChannelInfo extends Component {
 const mapStateToProps = (state) => ({
   channelsToCompare: state.entities.channelsToCompare,
   signedInUser: state.user.signedInUser,
-  ownChannel_TS: state.entities.ownChannelData_TS
+  ownChannel_TS: state.entities.ownChannelData_TS,
+  ownChannel_Views: state.entities.ownChannelData_Views
 });
 
 const mapDispatchToProps = (dispatch) => ({
   updateData: (newData) => dispatch(updateYouTubeData(newData)),
   addChannelToWatch: (channelId) => dispatch(addChannelToWatch(channelId)),
-  setOwnTrafficSources: (data) => dispatch(setOwnTrafficSources(data))
+  setOwnTrafficSources: (data) => dispatch(setOwnTrafficSources(data)),
+  setOwnChannelStats: (data) => dispatch(setOwnChannelStats(data))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(OwnChannelInfo);

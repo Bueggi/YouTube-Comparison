@@ -1,0 +1,9 @@
+.nav-wrapper {
+  position: relative;
+}
+
+.absolute_position {
+  position: absolute;
+  width: 100%;
+  z-index: 99;
+}

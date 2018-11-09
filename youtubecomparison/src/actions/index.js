@@ -8,6 +8,11 @@ export const setOwnTrafficSources = (data) => ({
   data
 });
 
+export const setOwnChannelStats = (data) => ({
+  type: 'SET_OWN_CHANNEL_DATA_VIEWS',
+  data
+});
+
 export const addChannelToWatch = (channelID) => ({
   type: 'ADD_CHANNEL_TO_WATCH',
   channelID

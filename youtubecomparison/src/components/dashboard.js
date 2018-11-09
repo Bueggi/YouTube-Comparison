@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { updateYouTubeData, userLogIn, userLogOut } from '../actions';
-import ChannelSearchCard from './pComponents/ChannelSearchCard';
 import OwnChannelInfo from './pComponents/ownChannelInfo';
+import Searchbar from './Searchbar';
 import GoogleLogin from 'react-google-login';
 import AwesomeDebouncePromise from 'awesome-debounce-promise';
-import moment from 'moment';
+import WelcomePage from './pComponents/welcomePage'
+
+import './css/ownChannelInfo.css'
 
 const serverHost = 'http://localhost:3001';
 
@@ -15,19 +17,13 @@ class Dashboard extends Component {
   constructor (props) {
     super(props);
     this.state = {
-      searchInput: '',
       signedIn : false
     };
-
-    this.searchCards = [];
     this.signedInUser = null;
   }
 
-
-  showChannelsDebounced = AwesomeDebouncePromise(this.showChannels, 500);
-
   // callback function for the GoogleAPI call
-  // sends a
+  // sends a request to google and stores the received accessToken in the local Storage
   responseGoogle = async response => {
     this.props.userLogIn(response.profileObj);
 
@@ -50,15 +46,6 @@ class Dashboard extends Component {
     this.setState({signedIn: true});
   }
 
-  updateLocalStorage = (data, userList) => {
-    let localData = localStorage.getItem(userList).split(',');
-    data.forEach(str => {
-      localData.push(str);
-    });
-    let newData = localData.join(',');
-    localStorage.setItem(userList, newData);
-  };
-
   login = async () => {
     if (localStorage.getItem('accessToken')) {
 
@@ -76,37 +63,7 @@ class Dashboard extends Component {
     }
   };
 
-
-  onSearchInput = (e) => {
-    const value = e.target.value;
-    this.setState({searchInput: value});
-    if (value === '') {
-      this.searchCards = []
-    }
-    else {
-      this.showChannels(value)
-    }
-  }
-
-  showChannels = async (channelToSearchFor) => {
-    await fetch(`https://www.googleapis.com/youtube/v3/search?type=channel&q=${channelToSearchFor}&part=snippet&key=AIzaSyAUcPsPaVuyHMTpHi9Qv3TzGLHRJghVdIM&maxResults=4`)
-    .then(data => data.json())
-    .then(data => {
-      this.searchCards = [];
-      for (let item in data.items) {
-        this.searchCards.push(data.items[item]);
-      }
-    }
-    )
-  }
-
-
-  clearInputField = () => {
-    this.setState({searchInput: ''});
-  }
-
   logInOrLogOut = () => {
-    console.log(this.state.signedIn)
     if (this.state.signedIn)
       {
         return (
@@ -139,50 +96,18 @@ class Dashboard extends Component {
   render () {
     return (
       <div>
-        <div>
-        <nav>
-          <div className="nav-wrapper">
-            <form>
-              <div className="input-field">
-                <input id="search" type="search" value={this.state.searchInput} onChange={this.onSearchInput} required />
-
-                <label className="label-icon" for="search"><i className="material-icons">search</i></label>
-                <i className="material-icons">close</i>
-
-              </div>
-            </form>
-
-          </div>
-        </nav>
+        <div className='header'>
+          {this.logInOrLogOut()}
         </div>
-        <div className="row">
 
-          { this.searchCards.length > 0 ?
-            this.searchCards.map(cardInfos =>
-            <ChannelSearchCard
-            key ={cardInfos.id.channelId}
-            id={cardInfos.id.channelId}
-            title={cardInfos.snippet.title}
-            thumbnail={cardInfos.snippet.thumbnails.medium.url}
-            clearData={ this.clearInputField }
-            signedInUser={this.state.signedIn}/>)
-              :
-              <div className="header">
-                {this.logInOrLogOut()}
-              </div>
-          }
-
+        <div className="channelInfo">
           {
-            this.state.signedIn ? <OwnChannelInfo /> : null
+            this.state.signedIn ? <OwnChannelInfo /> : <WelcomePage />
           }
-        </div>
+          </div>
       </div>
-    // End of return
     );
-
-  // End of render
   }
-  // End of Component
 }
 
 const mapStateToProps = (state) => ({

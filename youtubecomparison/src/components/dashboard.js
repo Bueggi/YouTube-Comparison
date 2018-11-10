@@ -5,6 +5,7 @@ import OwnChannelInfo from './pComponents/ownChannelInfo';
 import GoogleLogin from 'react-google-login';
 import AwesomeDebouncePromise from 'awesome-debounce-promise';
 import WelcomePage from './pComponents/welcomePage'
+import OwnDataTable from './pComponents/ownDataTable';
 
 import './css/ownChannelInfo.css'
 
@@ -17,34 +18,11 @@ class Dashboard extends Component {
     super(props);
     this.state = {
       signedIn : false,
-      ownChannelViews: null
+      ownChannelViews: {}
     };
     this.signedInUser = null;
   }
 
-  componentDidUpdate () {
-    if (this.props.ownChannel_Views && !this.state.ownChannelViews) {
-      this.setState({ ownChannelViews: this.dataToStatistics(this.props.ownChannel_Views.columnHeaders, this.props.ownChannel_Views.rows) })
-    }
-  }
-
-   // function to render the table in the header
-   dataToStatistics = (headers, rows) => {
-    const result = {
-    }
-
-    const headersArray = headers.map(el => el.name)
-    const headerArr = headers.map(el => result[el.name] = 0)
-
-    rows.reduce((acc, el) => {
-      el.map((element, i) => {
-        return result[headersArray[i]] += element;
-      })
-      return acc;
-    }, headerArr)
-    console.log('////// result of computation', result)
-    return result;
-  }
 
   // callback function for the GoogleAPI call
   // sends a request to google and stores the received accessToken in the local Storage
@@ -96,8 +74,6 @@ class Dashboard extends Component {
             <h2>You're logged in: {this.props.signedInUser.name}</h2>
             <img src={this.props.signedInUser.imageUrl} alt="User profile pic" className="circle"/>
           </div>
-          <div className="l4 s12">
-          </div>
         </div>
           )
       }
@@ -129,7 +105,12 @@ class Dashboard extends Component {
 
         <div className="channelInfo">
           {
-            this.state.signedIn ? <OwnChannelInfo /> : <WelcomePage />
+            this.state.signedIn ?
+            <div className="container">
+              <OwnDataTable />
+              <OwnChannelInfo />
+            </div>
+            : <WelcomePage />
           }
           </div>
       </div>

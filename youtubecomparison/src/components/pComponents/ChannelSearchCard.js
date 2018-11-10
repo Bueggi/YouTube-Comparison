@@ -10,7 +10,6 @@ class ChannelSearch extends Component {
   render () {
     if(this.props.id)
     {
-      console.log('been here as well')
       return (
       <div className="col s12 m3" width="100%">
         <div className="card large">

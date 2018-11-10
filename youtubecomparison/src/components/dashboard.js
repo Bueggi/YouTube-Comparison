@@ -6,6 +6,7 @@ import GoogleLogin from 'react-google-login';
 import AwesomeDebouncePromise from 'awesome-debounce-promise';
 import WelcomePage from './pComponents/welcomePage'
 import OwnDataTable from './pComponents/ownDataTable';
+import ChannelComparison from './channelComparison';
 
 import './css/ownChannelInfo.css'
 
@@ -109,6 +110,7 @@ class Dashboard extends Component {
             <div className="container">
               <OwnDataTable />
               <OwnChannelInfo />
+              <ChannelComparison />
             </div>
             : <WelcomePage />
           }

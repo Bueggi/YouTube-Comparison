@@ -1,5 +1,5 @@
 export const updateYouTubeData = (data) => ({
-  type: 'UPDATE_DATA',
+  type: 'UPDATE_CHANNEL_DATA',
   data
 });
 

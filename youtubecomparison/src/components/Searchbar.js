@@ -49,6 +49,7 @@ class Searchbar extends Component {
 
   clearInputField = () => {
     this.setState({searchInput: ''});
+    this.searchCards = [];
   }
 
   render () {

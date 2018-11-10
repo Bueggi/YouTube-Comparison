@@ -21,7 +21,12 @@ class ChannelSearch extends Component {
             <h3>{this.props.title}</h3>
           </div>
           <div className="card-action">
-            <a href="#" onClick={() => {this.props.addChannelToWatch(this.props.id); this.props.clearData() } }>Add To Comparison</a>
+            { this.props.signedInUser ?
+              <button className="waves-effect waves-light btn" onClick={() => {this.props.addChannelToWatch(this.props.id); this.props.clearData() } }><i className="material-icons right">add_box</i>Add Channel</button>
+              :
+              <button className="btn disabled">Sign in to compare</button>
+
+            }
           </div>
         </div>
       </div>
@@ -34,6 +39,7 @@ class ChannelSearch extends Component {
 
 const mapStateToProps = (state) => ({
   channelsToCompare: state.entities.channelsToCompare,
+  signedInUser: state.user.signedInUser
 });
 
 const mapDispatchToProps = (dispatch) => ({

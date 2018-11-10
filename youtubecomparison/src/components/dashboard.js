@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { updateYouTubeData, userLogIn, userLogOut } from '../actions';
 import OwnChannelInfo from './pComponents/ownChannelInfo';
-import Searchbar from './Searchbar';
 import GoogleLogin from 'react-google-login';
 import AwesomeDebouncePromise from 'awesome-debounce-promise';
 import WelcomePage from './pComponents/welcomePage'
@@ -67,10 +66,11 @@ class Dashboard extends Component {
     if (this.state.signedIn)
       {
         return (
-        <div>
-          {console.log(this.props.signedInUser)}
-          <h2>You're logged in: {this.props.signedInUser.name}</h2>
-          <img src={this.props.signedInUser.imageUrl} alt="User profile pic" />
+        <div className="row">
+            <div className="l4 s12">
+            <h2>You're logged in: {this.props.signedInUser.name}</h2>
+            <img src={this.props.signedInUser.imageUrl} alt="User profile pic" className="circle"/>
+          </div>
         </div>
           )
       }

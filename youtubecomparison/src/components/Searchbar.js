@@ -16,12 +16,12 @@ class Searchbar extends Component {
     };
     this.searchCards = [];
   }
-
   // debounce showChannels function so the call to the API can only be made every 0.5s
   showChannelsDebounced = AwesomeDebouncePromise(this.showChannels, 500);
 
+
   // handler for the SearchInput
-  //
+
   onSearchInput = (e) => {
     const value = e.target.value;
     this.setState({searchInput : value});
@@ -91,7 +91,7 @@ class Searchbar extends Component {
 
 const mapStateToProps = (state) => ({
   channelsToCompare: state.entities.channelsToCompare,
-  signedInUser: state.user.signedInUser
+  signedInUser: state.user.signedInUser,
 });
 
 const mapDispatchToProps = (dispatch) => ({

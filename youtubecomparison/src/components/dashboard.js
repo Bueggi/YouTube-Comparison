@@ -16,9 +16,34 @@ class Dashboard extends Component {
   constructor (props) {
     super(props);
     this.state = {
-      signedIn : false
+      signedIn : false,
+      ownChannelViews: null
     };
     this.signedInUser = null;
+  }
+
+  componentDidUpdate () {
+    if (this.props.ownChannel_Views && !this.state.ownChannelViews) {
+      this.setState({ ownChannelViews: this.dataToStatistics(this.props.ownChannel_Views.columnHeaders, this.props.ownChannel_Views.rows) })
+    }
+  }
+
+   // function to render the table in the header
+   dataToStatistics = (headers, rows) => {
+    const result = {
+    }
+
+    const headersArray = headers.map(el => el.name)
+    const headerArr = headers.map(el => result[el.name] = 0)
+
+    rows.reduce((acc, el) => {
+      el.map((element, i) => {
+        return result[headersArray[i]] += element;
+      })
+      return acc;
+    }, headerArr)
+    console.log('////// result of computation', result)
+    return result;
   }
 
   // callback function for the GoogleAPI call
@@ -71,6 +96,8 @@ class Dashboard extends Component {
             <h2>You're logged in: {this.props.signedInUser.name}</h2>
             <img src={this.props.signedInUser.imageUrl} alt="User profile pic" className="circle"/>
           </div>
+          <div className="l4 s12">
+          </div>
         </div>
           )
       }
@@ -112,7 +139,8 @@ class Dashboard extends Component {
 
 const mapStateToProps = (state) => ({
   channelsToCompare: state.entities.channelsToCompare,
-  signedInUser: state.user.signedInUser
+  signedInUser: state.user.signedInUser,
+  ownChannel_Views: state.entities.ownChannelData_Views
 });
 
 const mapDispatchToProps = (dispatch) => ({

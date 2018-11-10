@@ -11,31 +11,36 @@ class ChannelComparison extends Component {
     }
   }
 
+  // async componentDidMount () {
+  //   console.log('ChannelComparison wurde aufgerufen')
+  //   await this.fetchUploadPlaylistForAddedVideos();
+  //   // await this.fetchFiveLatestVideosFromChannelUploads();
+  //   // await this.fetchVideoStatisticsfromSingleVideos();
+  // }
+
   async componentDidUpdate () {
     console.log('ChannelComparison wurde aufgerufen')
     await this.fetchUploadPlaylistForAddedVideos();
-    await this.fetchFiveLatestVideosFromChannelUploads();
-    await this.fetchVideoStatisticsfromSingleVideos();
+    // await this.fetchFiveLatestVideosFromChannelUploads();
+    // await this.fetchVideoStatisticsfromSingleVideos();
   }
 
   fetchUploadPlaylistForAddedVideos = () => {
-    const newChannelData = this.props.dataFromYouTubeChannels;
-    this.props.channelsToCompare.map(async channel =>
-      {
-        if (!newChannelData[channel]) {
+    const channels = this.props.channelsToCompare;
+    let updatedData = this.props.fetchedUploadLists;
+    console.log('channels,', channels)
+    channels.map( async channel => {
+      if (!updatedData || !updatedData.find(el => el.items[0].id === channel)) {
         return await fetch(`https://www.googleapis.com/youtube/v3/channels?id=${channel}&part=snippet,contentDetails&key=AIzaSyAUcPsPaVuyHMTpHi9Qv3TzGLHRJghVdIM&fields=items(id,snippet(title),contentDetails(relatedPlaylists(uploads)))`)
-          .then((data) => data.json())
+          .then(data => data.json())
           .then(data => {
-            newChannelData[channel] = {
-              title: data.items[0].snippet.title,
-              uploads: data.items[0].contentDetails.relatedPlaylists.uploads
-            };
-            this.props.updateYouTubeChannelData(newChannelData);
-          })
+            return updatedData.push(data)})
         }
+        return updatedData;
       }
     )
-
+    console.log(updatedData)
+    this.props.updateYouTubeChannelData(updatedData);
   }
 
   fetchFiveLatestVideosFromChannelUploads = () => {
@@ -78,7 +83,7 @@ class ChannelComparison extends Component {
 
 const mapStateToProps = (state) => ({
   channelsToCompare: state.entities.channelsToCompare,
-  dataFromYouTubeChannels: state.entities.dataFromYouTubeChannels
+  fetchedUploadLists: state.entities.fetchedUploadLists
 });
 
 const mapDispatchToProps = (dispatch) => ({

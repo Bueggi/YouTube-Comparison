@@ -4,6 +4,7 @@ import { updateYouTubeData, addChannelToWatch, setOwnTrafficSources, setOwnChann
 import moment from 'moment';
 import TrafficSources from './TrafficSources';
 import ChannelStatistics from './ChannelStatistics';
+import DatePicker from "react-datepicker";
 
 import '../css/ownChannelInfo.css';
 
@@ -13,7 +14,9 @@ class OwnChannelInfo extends Component {
     super(props);
     this.state = {
       today: moment().format('YYYY-MM-DD'),
-      last28days : moment().subtract(28, 'days').format('YYYY-MM-DD')
+      last28days : moment().subtract(28, 'days').format('YYYY-MM-DD'),
+      startDate:moment().format('YYYY-MM-DD'),
+      endDate:moment().subtract(28, 'days').format('YYYY-MM-DD')
     }
   }
 
@@ -52,6 +55,21 @@ class OwnChannelInfo extends Component {
     if (this.props.ownChannel_TS && this.props.ownChannel_Views) {
       return (
         <div className="chart_row">
+          <DatePicker
+            selected={this.state.startDate}
+            selectsStart
+            startDate={this.state.startDate}
+            endDate={this.state.endDate}
+            onChange={this.handleChangeStart}
+          />
+          <DatePicker
+              selected={this.state.endDate}
+              selectsEnd
+              startDate={this.state.startDate}
+              endDate={this.state.endDate}
+              onChange={this.handleChangeEnd}
+          />
+
           <TrafficSources
           data={this.props.ownChannel_TS}
           dataToDisplay={[

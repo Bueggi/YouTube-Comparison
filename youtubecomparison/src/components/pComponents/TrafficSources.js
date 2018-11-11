@@ -59,6 +59,7 @@ class TrafficSources extends Component {
     datasets: [],
   });
 
+
   return traversedData;
   }
 
@@ -81,7 +82,8 @@ class TrafficSources extends Component {
             }]
           }}
         />
-        <ToolTips data={this.props.data} />
+        {console.log(this.state.ChartData)}
+        <ToolTips data={this.state.ChartData} />
       </div>
     )
   }

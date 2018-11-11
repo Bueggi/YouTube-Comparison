@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import '../css/ownChannelInfo.css'
 
 class OwnDataTable extends Component {
 
@@ -31,17 +32,15 @@ class OwnDataTable extends Component {
       })
       return acc;
     }, headerArr)
-    console.log(headers)
-    console.log('////// result of computation', result)
     return result;
   }
 
 
   render () {
     return (
-      <div className="container row">
+      <div className="row">
         <div className="col l12 s12">
-          <table className="responsive-table centered striped">
+          <table className="responsive-table centered striped white-bg">
             <thead>
               <tr>
                 <th>Channel</th>

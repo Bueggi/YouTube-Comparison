@@ -3,12 +3,14 @@ import { connect } from 'react-redux';
 import { updateYouTubeData, userLogIn, userLogOut } from '../actions';
 import OwnChannelInfo from './pComponents/ownChannelInfo';
 import GoogleLogin from 'react-google-login';
+import { GoogleLogout } from 'react-google-login';
 import AwesomeDebouncePromise from 'awesome-debounce-promise';
 import WelcomePage from './pComponents/welcomePage'
 import OwnDataTable from './pComponents/ownDataTable';
 import ChannelComparison from './channelComparison';
 
 import './css/ownChannelInfo.css'
+import VideoComparison from './pComponents/VideoComparison';
 
 const serverHost = 'http://localhost:3001';
 
@@ -66,16 +68,24 @@ class Dashboard extends Component {
     }
   };
 
+  logout = () => {
+    localStorage.removeItem('accessToken');
+    this.props.userLogOut();
+  }
+
   logInOrLogOut = () => {
     if (this.state.signedIn)
       {
         return (
-        <div className="row">
-            <div className="l4 s12">
-            <h2>You're logged in: {this.props.signedInUser.name}</h2>
-            <img src={this.props.signedInUser.imageUrl} alt="User profile pic" className="circle"/>
+          <div className='row'>
+            <div className="l10 s12">
+              <div>
+                <img src={this.props.signedInUser.imageUrl} alt="User profile pic" className="circle"/>
+                <h2>You're logged in: {this.props.signedInUser.name}</h2>
+                <OwnDataTable />
+              </div>
+            </div>
           </div>
-        </div>
           )
       }
       else {
@@ -107,10 +117,14 @@ class Dashboard extends Component {
         <div className="channelInfo">
           {
             this.state.signedIn ?
+            <div>
             <div className="container">
-              <OwnDataTable />
               <OwnChannelInfo />
               <ChannelComparison />
+            </div>
+            <div>
+              <VideoComparison />
+            </div>
             </div>
             : <WelcomePage />
           }

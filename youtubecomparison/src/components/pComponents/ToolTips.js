@@ -7,6 +7,7 @@ class ToolTips extends Component {
   render () {
     console.log(this.props.data)
     return (
+      <React.Fragment>
       <div className="row">
         <div class="col l3 s12 card blue-grey darken-1">
         <div class="card-content white-text">
@@ -14,6 +15,9 @@ class ToolTips extends Component {
         </div>
         </div>
       </div>
+
+
+      </React.Fragment>
     );
   }
 }

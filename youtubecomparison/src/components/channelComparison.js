@@ -11,23 +11,22 @@ class ChannelComparison extends Component {
     }
   }
 
-  // async componentDidMount () {
-  //   console.log('ChannelComparison wurde aufgerufen')
-  //   await this.fetchUploadPlaylistForAddedVideos();
-  //   // await this.fetchFiveLatestVideosFromChannelUploads();
-  //   // await this.fetchVideoStatisticsfromSingleVideos();
-  // }
-
-  componentDidUpdate () {
+  async componentDidMount () {
     try {
       this.fetchUploadPlaylistForAddedVideos();
-      // this.fetchFiveLatestVideosFromChannelUploads();
-      // this.fetchVideoStatisticsfromSingleVideos();
     }
     catch (e) {
       throw new Error(e);
     }
-    // await this.fetchVideoStatisticsfromSingleVideos();
+  }
+
+  componentDidUpdate () {
+    try {
+      this.fetchUploadPlaylistForAddedVideos();
+    }
+    catch (e) {
+      throw new Error(e);
+    }
   }
 
 
@@ -36,7 +35,6 @@ class ChannelComparison extends Component {
 
     let updatedData = this.props.fetchedUploadLists;
     const channelToFetch = channels[channels.length-1];
-
 
     if (channelToFetch && !channelToFetch.videos) {
       let newChannel = await fetch(`https://www.googleapis.com/youtube/v3/channels?id=${channelToFetch}&part=snippet,contentDetails,statistics&key=AIzaSyAUcPsPaVuyHMTpHi9Qv3TzGLHRJghVdIM&fields=items(id,snippet(title),contentDetails(relatedPlaylists(uploads)),statistics(subscriberCount))`)
@@ -61,82 +59,27 @@ class ChannelComparison extends Component {
           });
         });
 
-
       const videosToFetch = newChannel.videos;
-      console.log('////// VIDEOS TO FETCH', newChannel ,videosToFetch, videosToFetch.join());
 
-      await fetch(`https://www.googleapis.com/youtube/v3/videos?part=snippet,statistics&key=AIzaSyAUcPsPaVuyHMTpHi9Qv3TzGLHRJghVdIM&id=${videosToFetch.join()}&fields=items(id,snippet(title,thumbnails(medium(url)),tags),statistics)`)
+      await fetch(`https://www.googleapis.com/youtube/v3/videos?part=snippet,statistics&key=AIzaSyAUcPsPaVuyHMTpHi9Qv3TzGLHRJghVdIM&id=${videosToFetch.join()}&fields=items(id,snippet(channelTitle,title,thumbnails(medium(url)),tags),statistics)`)
         .then(res => res.json())
         .then(data => {
           newChannel.videoStats = [];
-          console.log('////////// DATATHAT GETS PUSHED', data)
           data.items.forEach(video => {
             newChannel.videoStats.push(
               {
                 id: video.id,
+                channelTitle: video.snippet.channelTitle,
                 title: video.snippet.title,
                 thumbnail: video.snippet.thumbnails.medium.url,
-                stats: video.snippet.statistics,
+                stats: video.statistics,
                 tags: video.snippet.tags
               }
             );
           })
         });
-
         updatedData.push(newChannel)
       this.props.updateYouTubeChannelData(updatedData);
-    }
-  }
-
-  // fetchFiveLatestVideosFromChannelUploads = async () => {
-  //   const newData = this.props.fetchedUploadLists;
-  //   const channelToCheck = newData[newData.length - 1];
-
-  //   if (channelToCheck && !channelToCheck.videos) {
-  //     channelToCheck.videos = [];
-  //     const uploadPlaylist = channelToCheck.uploads;
-  //     await fetch(`https://www.googleapis.com/youtube/v3/playlistItems?part=contentDetails&key=AIzaSyAUcPsPaVuyHMTpHi9Qv3TzGLHRJghVdIM&playlistId=${uploadPlaylist}`)
-  //       .then(res => res.json())
-  //       .then(data => {
-  //         data.items.forEach(video => {
-  //           channelToCheck.videos.push(video.contentDetails.videoId)
-  //         });
-  //       });
-
-  //     newData.pop();
-  //     newData.push(channelToCheck);
-  //     this.props.updateYouTubeChannelData(newData);
-  //   }
-  // }
-
-
-  fetchVideoStatisticsfromSingleVideos = async () => {
-    const newData = this.props.fetchedUploadLists;
-    const channelToCheck = newData[newData.length -1]
-    if (channelToCheck && !channelToCheck.videoStats) {
-      const videosToFetch = channelToCheck.videos;
-      console.log('////// CHANNEL', channelToCheck, channelToCheck.videos)
-      console.log('////// VIDEOS TO FETCH', videosToFetch)
-      await fetch(`https://www.googleapis.com/youtube/v3/videos?part=snippet,statistics&key=AIzaSyAUcPsPaVuyHMTpHi9Qv3TzGLHRJghVdIM&id=${videosToFetch.join()}&fields=items(id,snippet(title,thumbnails(medium(url)),tags),statistics)`)
-        .then(res => res.json())
-        .then(data => {
-          channelToCheck.videoStats = [];
-          console.log('////////// WHAT????', data)
-          data.items.forEach(video => {
-            channelToCheck.videoStats.push(
-              {
-                id: video.id,
-                title: video.snippet.title,
-                thumbnail: video.snippet.thumbnails.medium.url,
-                stats: video.snippet.statistics,
-                tags: video.snippet.tags
-              }
-            );
-          })
-        });
-        newData.pop();
-        newData.push(channelToCheck);
-        this.props.updateYouTubeChannelData(newData);
     }
   }
 

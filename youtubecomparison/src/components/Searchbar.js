@@ -23,6 +23,7 @@ class Searchbar extends Component {
   // handler for the SearchInput
 
   onSearchInput = (e) => {
+    e.preventDefault();
     const value = e.target.value;
     this.setState({searchInput : value});
 

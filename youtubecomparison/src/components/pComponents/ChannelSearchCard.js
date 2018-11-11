@@ -3,9 +3,6 @@ import { connect } from 'react-redux';
 import { updateYouTubeData, addChannelToWatch } from '../../actions';
 
 class ChannelSearch extends Component {
-  handleClick (e) {
-    console.log(e.target)
-  }
 
   render () {
     if(this.props.id)
@@ -14,7 +11,7 @@ class ChannelSearch extends Component {
       <div className="col s12 m3" width="100%">
         <div className="card large">
           <div className="card-image">
-            <img alt="Blablabal" src={this.props.thumbnail} />
+            <img alt="Thumbnail of a channel" src={this.props.thumbnail} />
           </div>
           <div className="card-content">
             <h3>{this.props.title}</h3>

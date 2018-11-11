@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Line } from 'react-chartjs-2';
+import ToolTips from './ToolTips';
 
 class TrafficSources extends Component {
 
@@ -80,6 +81,7 @@ class TrafficSources extends Component {
             }]
           }}
         />
+        <ToolTips data={this.props.data} />
       </div>
     )
   }

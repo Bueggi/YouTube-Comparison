@@ -70,8 +70,6 @@ class ChannelStatistics extends Component {
   viewsAndMinutesFilter = (data) => {
     if (this.state.chartData) {
       let chartData = this.state.chartData;
-      console.log(chartData)
-      console.log(this.state.chartData)
       const filteredDatasets = data.datasets.filter(el => el.label === 'views' || el.label === 'estimatedMinutesWatched' )
       chartData.datasets = filteredDatasets;
       return chartData;

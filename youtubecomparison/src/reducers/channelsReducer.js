@@ -1,8 +1,6 @@
 const initialState = {
   channelsToCompare: [],
   fetchedUploadLists: [],
-  fetchedVideoLists: [],
-  fetchedVideoStats: [],
   ownChannelData_TS: null,
   ownChannelData_Views: null,
 }

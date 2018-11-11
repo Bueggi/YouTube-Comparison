@@ -3,6 +3,11 @@ export const updateYouTubeData = (data) => ({
   data
 });
 
+export const updateVideoLists = (data) => ({
+  type: 'UPDATE_VIDEO_LISTS',
+  data
+});
+
 export const setOwnTrafficSources = (data) => ({
   type: 'SET_OWN_CHANNEL_DATA_TS',
   data

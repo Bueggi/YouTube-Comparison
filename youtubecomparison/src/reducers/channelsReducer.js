@@ -35,9 +35,10 @@ const entities = ( state = initialState, action) => {
     else return state;
 
     case 'REMOVE_CHANNEL_FROM_WATCHLIST':
+    console.log('///////////// CHANNELREDUCER', action.channelID, state.channelsToCompare, state.channelsToCompare.filter(el => el !== action.channelID))
       return {
         ...state,
-        channelsToCompare: state.channelsToCompare.filter(el => el.id !== action.channelID)
+        channelsToCompare: state.channelsToCompare.filter(el => el !== action.channelID)
       };
 
     case 'SET_OWN_CHANNEL_DATA_TS':

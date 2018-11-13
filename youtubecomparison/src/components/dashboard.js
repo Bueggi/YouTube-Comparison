@@ -6,7 +6,6 @@ import AwesomeDebouncePromise from 'awesome-debounce-promise';
 import WelcomePage from './pComponents/welcomePage'
 
 import './css/ownChannelInfo.css'
-import VideoComparison from './videoComparison';
 import Header from './Header';
 
 

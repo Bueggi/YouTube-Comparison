@@ -46,7 +46,7 @@ class ToolTips extends Component {
         <div class="row">
           {
             this.toolTips.map((el, i) => {
-              return <div class="col s12 m5 l3 small">
+              return <div class="col s12 m5 l3 small" key={i}>
                         <div class='card-panel teal'>
                           <span class="white-text">
                             {el[1]}

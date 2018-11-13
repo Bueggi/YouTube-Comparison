@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import './css/videoComparison.css'
-import { updateYouTubeData } from '../actions';
+import { updateYouTubeData, removeChannelFromWatchList } from '../actions';
 
 class VideoComparison extends Component {
 
@@ -73,7 +73,7 @@ class VideoComparison extends Component {
 
       const videosToFetch = newChannel.videos;
 
-      await fetch(`https://www.googleapis.com/youtube/v3/videos?part=snippet,statistics&key=AIzaSyAUcPsPaVuyHMTpHi9Qv3TzGLHRJghVdIM&id=${videosToFetch.join()}&fields=items(id,snippet(channelTitle,title,thumbnails(medium(url)),tags),statistics)`)
+      await fetch(`https://www.googleapis.com/youtube/v3/videos?part=snippet,statistics&key=AIzaSyAUcPsPaVuyHMTpHi9Qv3TzGLHRJghVdIM&id=${videosToFetch.join()}&fields=items(id,snippet(channelId,channelTitle,title,thumbnails(medium(url)),tags),statistics)`)
       .then(res => res.json())
       .then(data => {
         newChannel.videoStats = [];
@@ -85,13 +85,13 @@ class VideoComparison extends Component {
               title: video.snippet.title,
               thumbnail: video.snippet.thumbnails.medium.url,
               stats: video.statistics,
-              tags: video.snippet.tags
+              tags: video.snippet.tags,
+              channelId: video.snippet.channelId
             }
             );
           })
         });
 
-        console.log(newChannel, 'inclu aller infos')
         updatedData.push(newChannel);
 
         this.setState({channelData : updatedData})
@@ -105,7 +105,7 @@ class VideoComparison extends Component {
       return (
         <div className='row container'>
           <div>
-            <h1>ChannelComparison</h1>
+            <h1>Video Comparison</h1>
             { this.state.channelData.map(videoList => {
             return videoList.videoStats.map((video, i) => {
               return (
@@ -116,7 +116,7 @@ class VideoComparison extends Component {
                     </div>
                     <div className="card-content">
                      <span className="card-title activator grey-text text-darken-4">{video.title.slice(0,20)}...<i className="material-icons right">more_vert</i></span>
-                      <button className='btn'>Remove {video.channelTitle} from comparison</button>
+                      <button className='btn' onClick={()=>{this.props.removeChannelFromWatchList(video.channelId)}}>Remove {video.channelTitle} from comparison</button>
                     </div>
                     <div className="card-reveal">
                      <span className="card-title grey-text text-darken-4">{video.title}<i className="material-icons right">close</i></span>
@@ -147,6 +147,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   updateYouTubeData: (newData) => dispatch(updateYouTubeData(newData)),
+  removeChannelFromWatchList: (id) => dispatch(removeChannelFromWatchList(id))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(VideoComparison);

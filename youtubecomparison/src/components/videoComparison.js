@@ -100,40 +100,43 @@ class VideoComparison extends Component {
   }
 
   render () {
-    return (
-      <div className='row container'>
-        <div>
-          <h1>ChannelComparison</h1>
-          {console.log(this.props.fetchedUploadLists, this.state.channelData)}
-          { this.state.channelData.map(videoList => {
-          return videoList.videoStats.map((video, i) => {
-            return (
-              <div key={`${video.id}${i}`} className='col l4 s12'>
-                <div className="card">
-                  <div className="card-image waves-effect waves-block waves-light">
-                   <img className="activator" alt="Thumbnail of selected video" src={video.thumbnail} />
-                  </div>
-                  <div className="card-content">
-                   <span className="card-title activator grey-text text-darken-4">{video.title.slice(0,20)}...<i className="material-icons right">more_vert</i></span>
-                    <button className='btn'>Remove {video.channelTitle} from comparison</button>
-                  </div>
-                  <div className="card-reveal">
-                   <span className="card-title grey-text text-darken-4">{video.title}<i className="material-icons right">close</i></span>
-                    <p>Views: {video.stats.viewCount}</p>
-                    <p>Likes: {video.stats.likeCount}</p>
-                    <p>Dislikes: {video.stats.dislikeCount}</p>
-                    <p>Comments: {video.stats.commentCount}</p>
-                    <div>Tags:{video.tags ? video.tags.map((tag, i) => <div id={tag+i} className="chip">{tag}</div>) : <p>No tags on this video</p>}</div>
+    if (this.state.channelData.length > 0) {
+
+      return (
+        <div className='row container'>
+          <div>
+            <h1>ChannelComparison</h1>
+            { this.state.channelData.map(videoList => {
+            return videoList.videoStats.map((video, i) => {
+              return (
+                <div key={`${video.id}${i}`} className='col l4 s12'>
+                  <div className="card">
+                    <div className="card-image waves-effect waves-block waves-light">
+                     <img className="activator" alt="Thumbnail of selected video" src={video.thumbnail} />
+                    </div>
+                    <div className="card-content">
+                     <span className="card-title activator grey-text text-darken-4">{video.title.slice(0,20)}...<i className="material-icons right">more_vert</i></span>
+                      <button className='btn'>Remove {video.channelTitle} from comparison</button>
+                    </div>
+                    <div className="card-reveal">
+                     <span className="card-title grey-text text-darken-4">{video.title}<i className="material-icons right">close</i></span>
+                      <p>Views: {video.stats.viewCount}</p>
+                      <p>Likes: {video.stats.likeCount}</p>
+                      <p>Dislikes: {video.stats.dislikeCount}</p>
+                      <p>Comments: {video.stats.commentCount}</p>
+                      <div>Tags:{video.tags ? video.tags.map((tag, i) => <div id={tag+i} className="chip">{tag}</div>) : <p>No tags on this video</p>}</div>
+                    </div>
                   </div>
                 </div>
-              </div>
-              )
+                )
+              })
             })
-          })
-        }
-          </div>
-      </div>
-    )
+          }
+            </div>
+        </div>
+      )
+    }
+    else return null;
   }
 }
 

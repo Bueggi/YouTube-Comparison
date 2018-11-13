@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import Dashboard from './components/dashboard.js';
-import ChannelDisplay from './components/channelDisplay.js';
 import { connect } from 'react-redux';
 import { updateYouTubeData } from './actions';
 import Searchbar from './components/Searchbar.js';
 import Footer from './components/pComponents/footer'
 import './App.css';
+import VideoComparison from './components/videoComparison';
 
 class App extends Component {
   render() {
@@ -16,7 +16,7 @@ class App extends Component {
       </header>
       <main>
         <Dashboard />
-        <ChannelDisplay />
+        <VideoComparison />
       </main>
       <Footer />
       </div>

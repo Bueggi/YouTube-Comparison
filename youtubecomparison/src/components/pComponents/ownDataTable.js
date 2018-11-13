@@ -14,24 +14,30 @@ class OwnDataTable extends Component {
   componentDidUpdate () {
     if (this.props.ownChannel_Views && !this.state.chartData) {
       this.setState({
-      chartData: this.dataToStatistics(this.props.ownChannel_Views.columnHeaders, this.props.ownChannel_Views.rows)
+      chartData: this.dataToStatistics(this.props.ownChannel_Views.datasets)
     });
   }
   }
 
-  dataToStatistics = (headers, rows) => {
+  dataToStatistics = (data) => {
+    console.log(data);
     const result = {
     }
 
-    const headersArray = headers.map(el => el.name)
-    const headerArr = headers.map(el => result[el.name] = 0)
+    console.log(data)
+    const headersArray = data.map(el => el.label)
+    headersArray.map(el => result[el.label] = 0)
 
-    rows.reduce((acc, el) => {
-      el.map((element, i) => {
-        return result[headersArray[i]] += element;
-      })
-      return acc;
-    }, headerArr)
+    console.log(result);
+
+      data.reduce((acc, el) => {
+        el.map((element, i) => {
+          return result[headersArray[i]] += element;
+        })
+        return acc;
+      }, 0)
+
+      console.log(result)
     return result;
   }
 

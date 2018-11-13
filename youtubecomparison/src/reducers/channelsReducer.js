@@ -1,8 +1,13 @@
+const moment = require('moment');
+
 const initialState = {
   channelsToCompare: [],
   fetchedUploadLists: [],
   ownChannelData_TS: null,
   ownChannelData_Views: null,
+  trafficSources: null,
+  startDate: moment().subtract(28, 'days').format('YYYY-MM-DD'),
+  endDate:  moment().format('YYYY-MM-DD'),
 }
 
 
@@ -14,17 +19,11 @@ const entities = ( state = initialState, action) => {
         fetchedUploadLists: action.data
       };
 
-      case 'UPDATE_VIDEO_LISTS':
-      return {
-        ...state,
-        fetchedVideoLists: action.data
-      };
-
-      case 'UPDATE_VIDEO_STATS':
-      return {
-        ...state,
-        fetchedVideoStats: action.data
-      };
+      case 'UPDATE_TRAFFIC_SOURCES':
+        return {
+          ...state,
+          trafficSources: action.data
+        };
 
     case 'ADD_CHANNEL_TO_WATCH':
     if(state.channelsToCompare.indexOf(action.channelID) === -1) {
@@ -53,6 +52,17 @@ const entities = ( state = initialState, action) => {
         ownChannelData_Views: action.data
       };
 
+      case 'UPDATE_START_DATE':
+      return {
+        ...state,
+        startDate: action.date
+      };
+
+      case 'UPDATE_END_DATE':
+      return {
+        ...state,
+        endDate: action.date
+      };
 
     default: return state;
   }

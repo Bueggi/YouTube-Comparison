@@ -19,9 +19,7 @@ class Searchbar extends Component {
   // debounce showChannels function so the call to the API can only be made every 0.5s
   showChannelsDebounced = AwesomeDebouncePromise(this.showChannels, 500);
 
-
   // handler for the SearchInput
-
   onSearchInput = (e) => {
     e.preventDefault();
     const value = e.target.value;
@@ -62,13 +60,12 @@ class Searchbar extends Component {
             <form>
               <div className="input-field">
                 <input id="search" type="search" value={this.state.searchInput} onChange={this.onSearchInput} required />
-                <label className="label-icon" for="search"><i className="material-icons">search</i></label>
+                <label className="label-icon" htmlFor="search"><i className="material-icons">search</i></label>
                 <i className="material-icons">close</i>
               </div>
             </form>
           </div>
         </nav>
-
 
         <div className="row absolute_position">
           { this.searchCards.length > 0 ?

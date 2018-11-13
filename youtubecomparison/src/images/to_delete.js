@@ -4,10 +4,8 @@ import '../css/videoComparison.css'
 
 class VideoComparison extends Component {
 
-  constructor (props) {
-    super(props);
-    this.state = {
-    }
+  componentWillUpdate () {
+    console.log('VideoComparison did update');
   }
 
   render () {
@@ -18,9 +16,9 @@ class VideoComparison extends Component {
         <div>
           <h1>ChannelComparison</h1>
           { this.props.fetchedUploadLists.map(videoList => {
-          return videoList.videoStats.map(video => {
+          return videoList.videoStats.map((video, i) => {
             return (
-              <div className='col l4 s12'>
+              <div key={`${video.id}${i}`} className='col l4 s12'>
               <div className="card">
                 <div className="card-image waves-effect waves-block waves-light">
                   <img className="activator" alt="Thumbnail of selected video" src={video.thumbnail} />
@@ -30,7 +28,7 @@ class VideoComparison extends Component {
                   <p><button className='btn'>Remove {video.channelTitle} from comparison</button></p>
                 </div>
                 <div className="card-reveal">
-                  <span className="card-title grey-text text-darken-4">{video.title}}<i className="material-icons right">close</i></span>
+                  <span className="card-title grey-text text-darken-4">{video.title}<i className="material-icons right">close</i></span>
                   <p>Views: {video.stats.viewCount}</p>
                   <p>Likes: {video.stats.likeCount}</p>
                   <p>Dislikes: {video.stats.dislikeCount}</p>

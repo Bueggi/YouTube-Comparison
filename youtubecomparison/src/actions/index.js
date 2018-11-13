@@ -3,6 +3,11 @@ export const updateYouTubeData = (data) => ({
   data
 });
 
+export const updateTrafficSources = (data) => ({
+  type: 'UPDATE_TRAFFIC_SOURCES',
+  data
+});
+
 
 export const setOwnTrafficSources = (data) => ({
   type: 'SET_OWN_CHANNEL_DATA_TS',
@@ -31,4 +36,14 @@ export const userLogIn = (user) => ({
 
 export const userLogOut = () => ({
   type: 'USER_LOG_OUT',
+});
+
+export const updateStartDate = (date) => ({
+  type: 'UPDATE_START_DATE',
+  date
+});
+
+export const updateEndDate = (date) => ({
+  type: 'UPDATE_END_DATE',
+  date
 });

@@ -1,5 +1,54 @@
 .flex {
   display: flex;
   flex-direction: row;
-  flex-wrap: nowrap;
+  flex-wrap: wrap;
+  padding-bottom: 0;
+}
+
+.flex-bottom-margin {
+  margin-bottom: 0px;
+  padding-bottom: 0px;
+}
+
+.flex-1 {
+  flex: 1;
+}
+
+.flex-4 {
+  flex: 4;
+}
+
+.header_profile {
+  position: absolute;
+  top: 160px;
+  left: 450px;
+  z-index: 0;
+}
+
+h3 {
+  color: white;
+}
+
+h4 {
+  color: white;
+}
+
+h5 {
+  color: white;
+}
+
+input {
+  color: white;
+}
+
+label {
+  color: white;
+}
+
+.card-content h2 {
+  color:rgba(0,0,0,0.87);
+}
+
+.header h4, .header h3{
+  font-weight: bold;
 }

@@ -9,8 +9,6 @@ class TrafficSources extends Component {
 
 
   render () {
-    console.log('/////////////// TS', this.props.TrafficSources)
-    // console.log('rendered Trafficsources', this.props.ownChannel_TS)
     return (
       <div id={this.counter} className="chart">
         <h1>{this.props.title}</h1>
@@ -26,7 +24,7 @@ class TrafficSources extends Component {
             }]
           }}
         />
-        {/* <ToolTips data={this.chartData} /> */}
+        <ToolTips data={this.props.trafficSources} />
       </div>
     )
   }

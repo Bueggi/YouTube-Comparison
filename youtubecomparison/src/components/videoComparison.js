@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import './css/videoComparison.css'
 import { updateYouTubeData, removeChannelFromWatchList } from '../actions';
+import './css/videoComparison.css'
 
 class VideoComparison extends Component {
 
@@ -104,8 +105,36 @@ class VideoComparison extends Component {
 
       return (
         <div className='row container'>
+          <h1>Video Comparison</h1>
+            <table className="videotable">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Views</th>
+                  <th>Likes</th>
+                  <th>Dislikes</th>
+                  <th>Comments</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              {this.state.channelData.map(videoList => {
+                return videoList.videoStats.map((video, i) => {
+                  return (
+                    <tr key={video.id}>
+                          <td>{video.title}</td>
+                          <td>{video.stats.viewCount}</td>
+                          <td>{video.stats.likeCount}</td>
+                          <td>{video.stats.dislikeCount}</td>
+                          <td>{video.stats.commentCount}</td>
+                    </tr>
+                  )
+                })
+              })}
+            </tbody>
+          </table>
+
           <div>
-            <h1>Video Comparison</h1>
             { this.state.channelData.map(videoList => {
             return videoList.videoStats.map((video, i) => {
               return (
@@ -114,10 +143,12 @@ class VideoComparison extends Component {
                     <div className="card-image waves-effect waves-block waves-light">
                      <img className="activator" alt="Thumbnail of selected video" src={video.thumbnail} />
                     </div>
+
                     <div className="card-content">
                      <span className="card-title activator grey-text text-darken-4">{video.title.slice(0,20)}...<i className="material-icons right">more_vert</i></span>
                       <button className='btn' onClick={()=>{this.props.removeChannelFromWatchList(video.channelId)}}>Remove {video.channelTitle} from comparison</button>
                     </div>
+
                     <div className="card-reveal">
                      <span className="card-title grey-text text-darken-4">{video.title}<i className="material-icons right">close</i></span>
                       <p>Views: {video.stats.viewCount}</p>
@@ -132,8 +163,8 @@ class VideoComparison extends Component {
               })
             })
           }
-            </div>
         </div>
+      </div>
       )
     }
     else return null;

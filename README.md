@@ -16,6 +16,11 @@ Clone or fork the repo and run `npm i` to install all neccessary dependencies.
 
 Go to `/server` and run `nodemon index.js`, then go to `/youtubecomparison` and run `npm start`
 
+## Tech Stack
+
+* React
+* koa
+
 ## Next steps
 
 NOTE: This version is not stable yet - following commits will ensure stability

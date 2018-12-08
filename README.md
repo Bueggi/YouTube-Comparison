@@ -4,9 +4,9 @@
 
 Tubeparison is an app making it easy to compare relevant KPIs across YouTube videos in order to see where channels having more subscribers than you are better and find the right strategies to make your channel more successfull.
 
-![Frontpage of the project](/home/christopher/Pictures/Frontpage.png)
+![Frontpage of the project](https://github.com/Bueggi/YouTube-Comparison/blob/master/pictures/Frontpage.png)
 
-![](/home/christopher/Pictures/Video Comparison.png)
+![Video Comparison](https://github.com/Bueggi/YouTube-Comparison/blob/master/pictures/Video%20Comparison.png)
 
 On the front page you can log in, and on the user page you can find and add channels. The five latest videos of each channel will be added to the comparison.
 

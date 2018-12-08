@@ -15,11 +15,10 @@ class Footer extends Component {
               <div className="col l4 s12">
                 <h5 className="white-text">Thanks To</h5>
                 <ul>
-                  <li><a className="grey-text text-lighten-3" href="#!">Marco</a></li>
-                  <li><a className="grey-text text-lighten-3" href="#!">Leo</a></li>
-                  <li><a className="grey-text text-lighten-3" href="#!">Alex</a></li>
-                  <li><a className="grey-text text-lighten-3" href="#!">Jack</a></li>
-                  <li><a className="grey-text text-lighten-3" href="#!">Oliver</a></li>
+                  Pictures:
+                  <li><a className="grey-text text-lighten-3" href="#!">photo3idea_studio / flaticon.com</a></li>
+                  <li><a className="grey-text text-lighten-3" href="#!">Freepik / flaticon.com</a></li>
+                  <li><a className="grey-text text-lighten-3" href="#!">Swifticons / flaticon.com</a></li>
                 </ul>
               </div>
             </div>

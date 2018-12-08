@@ -7,7 +7,6 @@ const authorize = async (req, res, next) => {
       res.status = 401;
       return;
   }
-  console.log('/////////', req.user, res.user)
   await next();
 };
 

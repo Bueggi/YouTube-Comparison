@@ -11,14 +11,14 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-      <header>
-        <Searchbar />
-      </header>
-      <main>
-        <Dashboard />
-        <VideoComparison />
-      </main>
-      <Footer />
+        <header>
+          <Searchbar />
+        </header>
+        <main>
+          <Dashboard />
+          <VideoComparison />
+        </main>
+        <Footer />
       </div>
     );
   }

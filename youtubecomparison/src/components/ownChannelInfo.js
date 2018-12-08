@@ -78,31 +78,32 @@ class OwnChannelInfo extends Component {
 
 // functions to fetch and transform data for chart 'Traffic Sources'
   dataToTrafficSource = (rawData) => {
-    console.log(rawData);
-    this.colorCounter = 0;
-    rawData = rawData.filter(el => this.DATA_TO_DISPLAY.indexOf(el[1]) !== -1)
+    if (rawData) {
+      this.colorCounter = 0;
+      rawData = rawData.filter(el => this.DATA_TO_DISPLAY.indexOf(el[1]) !== -1)
 
-    const traversedData = rawData.reduce((acc, date) => {
-      if(acc.labels.indexOf(date[0]) === -1) acc.labels.push(date[0]);
+      const traversedData = rawData.reduce((acc, date) => {
+        if(acc.labels.indexOf(date[0]) === -1) acc.labels.push(date[0]);
 
 
-      const dataset = acc.datasets.find(el => el.label === date[1])
-      if (!dataset) {
-        acc.datasets.push({
-          label: date[1],
-          data: [date[2]],
-          backgroundColor: this.CHART_COLORS[this.colorCounter],
-          borderColor: this.BORDER_COLORS[this.colorCounter]
-        })
-      }
-      else dataset.data.push(date[2])
-      this.colorCounter++;
-      return acc;
-    }, {
-      labels: [],
-      datasets: []
-    });
-  return traversedData;
+        const dataset = acc.datasets.find(el => el.label === date[1])
+        if (!dataset) {
+          acc.datasets.push({
+            label: date[1],
+            data: [date[2]],
+            backgroundColor: this.CHART_COLORS[this.colorCounter],
+            borderColor: this.BORDER_COLORS[this.colorCounter]
+          })
+        }
+        else dataset.data.push(date[2])
+        this.colorCounter++;
+        return acc;
+      }, {
+        labels: [],
+        datasets: []
+      });
+    return traversedData;
+    }
   }
 
   fetchAnalyticsData = async() => {
@@ -118,33 +119,36 @@ class OwnChannelInfo extends Component {
   }
 
   dataToStatistics = (headers, rows) => {
-    this.colorCounter = 0;
-    const result = {
-      labels: [],
-      datasets: []
-    }
-
-    headers.map(el =>
-      {
-        result.datasets.push({
-        label: el.name,
-        data: [],
-        backgroundColor: this.CHART_COLORS[this.colorCounter],
-        borderColor: this.BORDER_COLORS[this.colorCounter]
-      })
-      this.colorCounter++;
-      return result
+    if (headers && rows) {
+      this.colorCounter = 0;
+      const result = {
+        labels: [],
+        datasets: []
       }
-    )
 
-    rows.map(el => {
-      result.labels.push(el[0]);
+      headers.map(el =>
+        {
+          result.datasets.push({
+          label: el.name,
+          data: [],
+          backgroundColor: this.CHART_COLORS[this.colorCounter],
+          borderColor: this.BORDER_COLORS[this.colorCounter]
+        })
+        this.colorCounter++;
+        return result
+        }
+      )
 
-      el.map((el, i) => {
-        result.datasets[i].data.push(el);
+      rows.map(el => {
+        result.labels.push(el[0]);
+
+        return el.map((el, i) => {
+          return result.datasets[i].data.push(el);
+        });
       });
-    });
-    return result;
+      return result;
+    }
+    return '';
   }
 
   fetchChannelStatistics = async () => {

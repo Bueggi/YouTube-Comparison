@@ -25,9 +25,8 @@ npm start```
 The project will now run on port 3000.
 
 ## Tech Stack
-
-* [React][https://reactjs.org/]
-* [koa][https://koajs.com/]
+* <a href="https://reactjs.org/">React</a>
+* <a href="https://koajs.com">koa</a>
 
 ## Used APIs
 * [YouTube Data API][https://developers.google.com/youtube/v3/]

@@ -15,8 +15,7 @@ On the front page you can log in, and on the user page you can find and add chan
 ## Installation
 
 1. Clone or fork the repo
-2. ```cd YouTube-Comparison
-npm i``` 
+2. ```cd YouTube-Comparison npm i``` 
 to install all neccessary dependencies.
 3. ``` cd server
 nodemon index.js```

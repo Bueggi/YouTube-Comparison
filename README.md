@@ -29,8 +29,8 @@ The project will now run on port 3000.
 * <a href="https://koajs.com">koa</a>
 
 ## Used APIs
-* [YouTube Data API][https://developers.google.com/youtube/v3/]
-* [YouTube Analytics API][https://developers.google.com/youtube/analytics/]
+* <a href="https://developers.google.com/youtube/v3">YouTube Data API</a>
+* <a href ="https://developers.google.com/youtube/analytics/">YouTube Analytics</a>
 
 ## Next steps
 

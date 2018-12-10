@@ -4,6 +4,8 @@
 
 Tubeparison is an app making it easy to compare relevant KPIs across YouTube videos in order to see where channels having more subscribers than you are better and find the right strategies to make your channel more successfull.
 
+## Screenshots
+
 ![Frontpage of the project](https://github.com/Bueggi/YouTube-Comparison/blob/master/pictures/Frontpage.png)
 
 ![Video Comparison](https://github.com/Bueggi/YouTube-Comparison/blob/master/pictures/Video%20Comparison.png)
@@ -12,18 +14,27 @@ On the front page you can log in, and on the user page you can find and add chan
 
 ## Installation
 
-Clone or fork the repo and run `npm i` to install all neccessary dependencies.
+1. Clone or fork the repo
+2. ```cd YouTube-Comparison
+npm i``` 
+to install all neccessary dependencies.
+3. ``` cd server
+nodemon index.js```
+4. ```cd youtubecomparison
+npm start```
 
-Go to `/server` and run `nodemon index.js`, then go to `/youtubecomparison` and run `npm start`
+The project will now run on port 3000.
 
 ## Tech Stack
 
-* React
-* koa
+* [React][https://reactjs.org/]
+* [koa][https://koajs.com/]
+
+## Used APIs
+* [YouTube Data API][https://developers.google.com/youtube/v3/]
+* [YouTube Analytics API][https://developers.google.com/youtube/analytics/]
 
 ## Next steps
-
-NOTE: This version is not stable yet - following commits will ensure stability
 
 * Adding a user database and make user choices persistent
 * Making the FE more stable
@@ -31,6 +42,6 @@ NOTE: This version is not stable yet - following commits will ensure stability
 * Better and more complex data analytics
 * reducing API calls
 
-## Contributers and how to contribute
+## Author and how to contribute
 
-So far this is a personal project of `@Bueggi`, please feel welcomed to contribute by forking the repo and making a PR.
+Author: Christopher Buecklein | [linkedIn][https://www.linkedin.com/in/christopher-b%C3%BCcklein-594b13b3/] | [gitHub][https://github.com/Bueggi]
